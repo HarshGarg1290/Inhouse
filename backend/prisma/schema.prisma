@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // Change this to match your database (MySQL, SQLite, etc.)
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -23,4 +23,45 @@ model User {
   aadharProofUrl  String
   verificationStatus String @default("PENDING")
   createdAt       DateTime @default(now())
+  rating          Float   @default(5.0)
+
+  rides           Ride[]    // Rides the user has created
+  vehicles        Vehicle[] // Vehicles saved for future use
+}
+
+model Ride {
+  id          String   @id @default(uuid())
+  driverId    String
+  driver      User     @relation(fields: [driverId], references: [id])
+  startLocation String
+  destination  String
+  dateTime     DateTime
+  seats        Int
+  price        Float
+  vehicle      Vehicle? @relation(fields: [vehicleId], references: [id]) // Optional vehicle
+  vehicleId    String?
+  preferences  Preferences? // <-- **Made this optional**
+  createdAt    DateTime @default(now())
+}
+
+model Vehicle {
+  id          String  @id @default(uuid())
+  driverId    String
+  driver      User    @relation(fields: [driverId], references: [id])
+  model       String
+  color       String
+  plate       String  @unique
+  rides       Ride[]  // This vehicle can be used in multiple rides
+}
+
+model Preferences {
+  id             String  @id @default(uuid())
+  rideId         String  @unique
+  ride           Ride    @relation(fields: [rideId], references: [id])
+  verifiedRiders Boolean
+  sameGender     Boolean
+  nonSmoking     Boolean
+  ecoFriendly    Boolean
+  allowPets      Boolean
+  quietRide      Boolean
 }

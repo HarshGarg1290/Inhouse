@@ -1,29 +1,82 @@
-"use client"
-import { use, useState } from 'react';
-import Head from 'next/head';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { FaRoute, FaMoneyBillWave, FaMapMarkedAlt, FaLock, FaTrain, FaUsers, FaPiggyBank, FaAward, FaIdCard, FaPhoneAlt, FaStar } from 'react-icons/fa';
+"use client";
+import { use, useState } from "react";
+import Head from "next/head";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import {
+	FaRoute,
+	FaMoneyBillWave,
+	FaMapMarkedAlt,
+	FaLock,
+	FaTrain,
+	FaUsers,
+	FaPiggyBank,
+	FaAward,
+	FaIdCard,
+	FaPhoneAlt,
+	FaStar,
+} from "react-icons/fa";
 import Link from "next/link";
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const features = [
-    { icon: <FaRoute className="text-blue-500 w-6 h-6" />, title: "Route Posting & Matching", description: "Post your route and get matched with compatible riders or drivers in seconds." },
-    { icon: <FaMoneyBillWave className="text-blue-500 w-6 h-6" />, title: "Expense Splitting", description: "Automated fare calculation and easy splitting between passengers." },
-    { icon: <FaMapMarkedAlt className="text-blue-500 w-6 h-6" />, title: "Real-time Tracking", description: "Live GPS tracking and accurate ETA updates for peace of mind." },
-    { icon: <FaLock className="text-blue-500 w-6 h-6" />, title: "Secure Payments", description: "Multiple payment options including UPI, wallets, crypto, and contactless." },
-    { icon: <FaTrain className="text-blue-500 w-6 h-6" />, title: "Multi-Modal Integration", description: "Seamlessly combine ride-sharing with public transportation options." },
-    { icon: <FaUsers className="text-blue-500 w-6 h-6" />, title: "Preference Matching", description: "Choose who you ride with based on preferences and comfort." },
-  ];
+	const features = [
+		{
+			icon: <FaRoute className="text-blue-500 w-6 h-6" />,
+			title: "Route Posting & Matching",
+			description:
+				"Post your route and get matched with compatible riders or drivers in seconds.",
+		},
+		{
+			icon: <FaMoneyBillWave className="text-blue-500 w-6 h-6" />,
+			title: "Expense Splitting",
+			description:
+				"Automated fare calculation and easy splitting between passengers.",
+		},
+		{
+			icon: <FaMapMarkedAlt className="text-blue-500 w-6 h-6" />,
+			title: "Real-time Tracking",
+			description:
+				"Live GPS tracking and accurate ETA updates for peace of mind.",
+		},
+		{
+			icon: <FaLock className="text-blue-500 w-6 h-6" />,
+			title: "Secure Payments",
+			description:
+				"Multiple payment options including UPI, wallets, crypto, and contactless.",
+		},
+		{
+			icon: <FaTrain className="text-blue-500 w-6 h-6" />,
+			title: "Multi-Modal Integration",
+			description:
+				"Seamlessly combine ride-sharing with public transportation options.",
+		},
+		{
+			icon: <FaUsers className="text-blue-500 w-6 h-6" />,
+			title: "Preference Matching",
+			description: "Choose who you ride with based on preferences and comfort.",
+		},
+	];
 
-  const securityFeatures = [
-    { icon: <FaIdCard className="text-blue-500 w-6 h-6" />, title: "Identity Verification", description: "Strict verification processes for all users." },
-    { icon: <FaPhoneAlt className="text-blue-500 w-6 h-6" />, title: "SOS & Emergency", description: "One-tap emergency assistance whenever you need it." },
-    { icon: <FaStar className="text-blue-500 w-6 h-6" />, title: "Rating System", description: "Comprehensive ratings ensure quality experiences." },
-  ];
+	const securityFeatures = [
+		{
+			icon: <FaIdCard className="text-blue-500 w-6 h-6" />,
+			title: "Identity Verification",
+			description: "Strict verification processes for all users.",
+		},
+		{
+			icon: <FaPhoneAlt className="text-blue-500 w-6 h-6" />,
+			title: "SOS & Emergency",
+			description: "One-tap emergency assistance whenever you need it.",
+		},
+		{
+			icon: <FaStar className="text-blue-500 w-6 h-6" />,
+			title: "Rating System",
+			description: "Comprehensive ratings ensure quality experiences.",
+		},
+	];
 
-  return (
+	return (
 		<div className="min-h-screen bg-gradient-to-b from-white to-gray-100">
 			<Head>
 				<title>RideShare | Smart Carpooling App</title>
@@ -64,10 +117,12 @@ export default function Home() {
 							>
 								Rewards
 							</a>
-							
 						</div>
 						<div className="flex items-center">
-							<Link href="/login" className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300">
+							<Link
+								href="/login"
+								className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300"
+							>
 								Get Started
 							</Link>
 							<div className="md:hidden">
@@ -464,10 +519,6 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-
-
-	
 		</div>
 	);
 }
-

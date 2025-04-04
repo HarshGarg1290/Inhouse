@@ -37,11 +37,13 @@ export default function Login() {
 			if (data.verificationStatus === "PENDING") {
 				setError("Verification still in progress.");
 			} else {
-				router.push("/dashboard"); // Redirect on success
+				localStorage.setItem("token", data.token);
+				localStorage.setItem("verificationStatus", data.verificationStatus);
+				router.push("/findride");
 			}
 		} catch (err) {
 			console.log(err);
-			
+
 			setError("Something went wrong. Try again.");
 		}
 	};

@@ -181,6 +181,129 @@ app.post("/login", async (req, res) => {
 		verificationStatus: user.verificationStatus,
 	});
 });
+const authenticateToken = (req, res, next) => {
+	const token = req.header("Authorization");
+	if (!token)
+		return res
+			.status(401)
+			.json({ message: "Access denied. No token provided." });
 
+	try {
+		const decoded = jwt.verify(
+			token.replace("Bearer ", ""),
+			process.env.JWT_SECRET
+		);
+		req.userId = decoded.userId;
+		next();
+	} catch (error) {
+		res.status(403).json({ message: "Invalid token." });
+	}
+};
+
+
+app.post("/offer-ride", authenticateToken, async (req, res) => {
+	try {
+		const {
+			startLocation,
+			destination,
+			dateTime,
+			seats,
+			price,
+			vehicleId, // This is optional (if the user selects an existing vehicle)
+			model,
+			color,
+			plate,
+			preferences,
+		} = req.body;
+
+		// Fetch user and verify status
+		const user = await prisma.user.findUnique({
+			where: { id: req.userId },
+			include: { vehicles: true },
+		});
+
+		if (!user) return res.status(404).json({ message: "User not found." });
+		if (user.verificationStatus !== "APPROVED") {
+			return res
+				.status(403)
+				.json({ message: "User is not verified to offer rides." });
+		}
+
+		let rideVehicleId = vehicleId;
+
+		// If the user provides a new vehicle, save it first
+		if (!vehicleId) {
+			// Check if vehicle already exists
+			const existingVehicle = await prisma.vehicle.findFirst({
+				where: { plate },
+			});
+
+			if (existingVehicle && existingVehicle.driverId !== req.userId) {
+				return res
+					.status(400)
+					.json({
+						message:
+							"Vehicle with this plate already exists and belongs to someone else.",
+					});
+			}
+
+			// If vehicle exists and belongs to the current user, use it
+			if (existingVehicle && existingVehicle.driverId === req.userId) {
+				rideVehicleId = existingVehicle.id;
+			} else {
+				// Create new vehicle
+				const newVehicle = await prisma.vehicle.create({
+					data: {
+						driverId: req.userId,
+						model,
+						color,
+						plate,
+					},
+				});
+				rideVehicleId = newVehicle.id;
+			}
+		} else {
+			// Verify that the vehicle belongs to the user
+			const userOwnsVehicle = user.vehicles.some((v) => v.id === vehicleId);
+			if (!userOwnsVehicle)
+				return res
+					.status(403)
+					.json({ message: "Vehicle does not belong to user." });
+		}
+
+		// Process preferences
+		const preferenceData = {};
+		if (preferences) {
+			Object.entries(preferences).forEach(([key, value]) => {
+				if (value === true) {
+					preferenceData[key] = true;
+				}
+			});
+		}
+
+		// Create the ride
+		const ride = await prisma.ride.create({
+			data: {
+				driverId: req.userId,
+				startLocation,
+				destination,
+				dateTime: new Date(dateTime),
+				seats: parseInt(seats),
+				price: parseFloat(price),
+				vehicleId: rideVehicleId,
+				preferences: {
+					create: preferenceData,
+				},
+			},
+		});
+
+		res.status(201).json({ message: "Ride offered successfully.", ride });
+	} catch (error) {
+		console.error("Error offering ride:", error);
+		res
+			.status(500)
+			.json({ message: "Internal server error.", error: error.message });
+	}
+});
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

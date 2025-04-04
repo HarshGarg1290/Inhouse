@@ -239,12 +239,10 @@ app.post("/offer-ride", authenticateToken, async (req, res) => {
 			});
 
 			if (existingVehicle && existingVehicle.driverId !== req.userId) {
-				return res
-					.status(400)
-					.json({
-						message:
-							"Vehicle with this plate already exists and belongs to someone else.",
-					});
+				return res.status(400).json({
+					message:
+						"Vehicle with this plate already exists and belongs to someone else.",
+				});
 			}
 
 			// If vehicle exists and belongs to the current user, use it
@@ -271,17 +269,7 @@ app.post("/offer-ride", authenticateToken, async (req, res) => {
 					.json({ message: "Vehicle does not belong to user." });
 		}
 
-		// Process preferences
-		const preferenceData = {};
-		if (preferences) {
-			Object.entries(preferences).forEach(([key, value]) => {
-				if (value === true) {
-					preferenceData[key] = true;
-				}
-			});
-		}
-
-		// Create the ride
+		// Create the ride with preferences in a single transaction
 		const ride = await prisma.ride.create({
 			data: {
 				driverId: req.userId,
@@ -292,8 +280,19 @@ app.post("/offer-ride", authenticateToken, async (req, res) => {
 				price: parseFloat(price),
 				vehicleId: rideVehicleId,
 				preferences: {
-					create: preferenceData,
+					create: {
+						verifiedRiders: preferences?.verifiedRiders || false,
+						sameGender: preferences?.sameGender || false,
+						nonSmoking: preferences?.nonSmoking || false,
+						ecoFriendly: preferences?.ecoFriendly || false,
+						allowPets: preferences?.allowPets || false,
+						quietRide: preferences?.quietRide || false,
+					},
 				},
+			},
+			include: {
+				preferences: true,
+				vehicle: true,
 			},
 		});
 
@@ -305,5 +304,29 @@ app.post("/offer-ride", authenticateToken, async (req, res) => {
 			.json({ message: "Internal server error.", error: error.message });
 	}
 });
+
+// Add this to your Express backend
+app.get("/my-rides", authenticateToken, async (req, res) => {
+  try {
+    const rides = await prisma.ride.findMany({
+      where: {
+        driverId: req.userId
+      },
+      include: {
+        vehicle: true,
+        preferences: true
+      },
+      orderBy: {
+        dateTime: 'desc'
+      }
+    });
+
+    res.json({ rides });
+  } catch (error) {
+    console.error("Error fetching rides:", error);
+    res.status(500).json({ message: "Failed to fetch rides", error: error.message });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

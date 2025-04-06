@@ -1,6 +1,8 @@
 // components/RideSearch.js
 import { useState } from "react";
 import { CalendarIcon, ClockIcon } from "lucide-react";
+import OSMAutocomplete from "./Autocomplete";
+
 
 export default function RideSearch({ onSearch }) {
 	const [formData, setFormData] = useState({
@@ -45,43 +47,28 @@ export default function RideSearch({ onSearch }) {
 	return (
 		<form onSubmit={handleSubmit} className="space-y-6">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<label
-						htmlFor="from"
-						className="block text-sm font-medium text-gray-700 mb-1"
-					>
-						From
-					</label>
-					<input
-						type="text"
-						id="from"
-						name="from"
-						required
-						placeholder="Enter pickup location"
-						value={formData.from}
-						onChange={handleChange}
-						className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-					/>
-				</div>
+				<OSMAutocomplete
+					label="From"
+					name="from"
+					placeholder="Enter starting location"
+					value={formData.from}
+					onChange={handleChange}
+			
+					options={{
+						countries: "IN", // Restricts results to India
+					}}
+				/>
 
-				<div>
-					<label
-						htmlFor="to"
-						className="block text-sm font-medium text-gray-700 mb-1"
-					>
-						To
-					</label>
-					<input
-						type="text"
-						id="to"
-						name="to"
-						required
-						placeholder="Enter destination"
-						value={formData.to}
-						onChange={handleChange}
-						className="w-full p-3 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
-					/>
-				</div>
+				<OSMAutocomplete
+					label="To"
+					name="to"
+					placeholder="Enter destination"
+					value={formData.to}
+					onChange={handleChange}
+					options={{
+						countries: "IN", // Restricts results to India
+					}}
+				/>
 			</div>
 
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">

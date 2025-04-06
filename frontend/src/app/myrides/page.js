@@ -79,7 +79,7 @@ export default function MyRides() {
 					<div className="bg-white shadow rounded-lg p-6 text-center">
 						<p className="text-gray-500">You haven't offered any rides yet.</p>
 						<button
-							onClick={() => router.push("/offer-ride")}
+							onClick={() => router.push("/offerride")}
 							className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
 						>
 							Offer a Ride

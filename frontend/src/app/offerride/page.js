@@ -14,9 +14,9 @@ export default function OfferRide() {
 		dateTime: "",
 		seats: 1,
 		price: "",
-		model: "", // Changed from vehicleModel to match backend
-		color: "", // Changed from vehicleColor to match backend
-		plate: "", // Changed from vehiclePlate to match backend
+		model: "",
+		color: "",
+		plate: "",
 		preferences: {
 			verifiedRiders: false,
 			sameGender: false,
@@ -138,7 +138,7 @@ export default function OfferRide() {
 				return;
 			}
 
-			const response = await fetch("http://localhost:5000/offer-ride", {
+			const response = await fetch("http://localhost:5000/api/rides/offer-ride", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -154,7 +154,7 @@ export default function OfferRide() {
 			}
 
 			setSuccess("Ride offered successfully!");
-			router.push("/"); // Redirect to rides page
+			router.push("/myrides");
 		} catch (err) {
 			console.error(err);
 			setErrors({ submit: err.message || "Failed to offer ride" });

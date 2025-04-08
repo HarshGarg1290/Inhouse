@@ -20,7 +20,7 @@ export default function MyRides() {
 					return;
 				}
 
-				const response = await fetch("http://localhost:5000/my-rides", {
+				const response = await fetch("http://localhost:5000/api/rides/my-rides", {
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},

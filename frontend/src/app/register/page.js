@@ -216,9 +216,8 @@ export default function Register() {
 				}
 			});
 
-			const response = await fetch("http://localhost:5000/register", {
+			const response = await fetch("http://localhost:5000/api/auth/register", {
 				method: "POST",
-				// Remove Content-Type header to let browser set it with boundary
 				body: formDataToSend,
 			});
 

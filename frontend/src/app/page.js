@@ -17,8 +17,18 @@ import {
 	FaStar,
 } from "react-icons/fa";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 export default function Home() {
+	  const router = useRouter();
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	 const handleClick = () => {
+			const token = localStorage.getItem("token");
+			if (token) {
+				router.push("/findride");
+			} else {
+				router.push("/login");
+			}
+		};
 
 	const features = [
 		{
@@ -119,12 +129,12 @@ export default function Home() {
 							</a>
 						</div>
 						<div className="flex items-center">
-							<Link
-								href="/login"
+							<button
+								onClick={handleClick}
 								className="hidden md:block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full shadow-md transition duration-300"
 							>
 								Get Started
-							</Link>
+							</button>
 							<div className="md:hidden">
 								<button
 									onClick={() => setIsMenuOpen(!isMenuOpen)}

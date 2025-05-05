@@ -32,20 +32,25 @@ model User {
 }
 
 model Ride {
-  id          String   @id @default(uuid())
-  driverId    String
-  driver      User     @relation(fields: [driverId], references: [id])
-  startLocation String
-  destination  String
-  dateTime     DateTime
-  seats        Int
-  price        Float
-  vehicle      Vehicle? @relation(fields: [vehicleId], references: [id]) // Optional vehicle
-  vehicleId    String?
-  preferences  Preferences? // <-- **Made this optional**
-  createdAt    DateTime @default(now())
-  bookings    RideBooking[]
+  id             String   @id @default(uuid())
+  driverId       String
+  driver         User     @relation(fields: [driverId], references: [id])
+  startLocation  String
+  startLat       Float
+  startLng       Float
+  destination    String
+  destLat        Float
+  destLng        Float
+  dateTime       DateTime
+  seats          Int
+  price          Float
+  vehicle        Vehicle? @relation(fields: [vehicleId], references: [id])
+  vehicleId      String?
+  preferences    Preferences?
+  createdAt      DateTime @default(now())
+  bookings       RideBooking[]
 }
+
 
 model Vehicle {
   id          String  @id @default(uuid())

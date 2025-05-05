@@ -2,6 +2,8 @@ import prisma from "../utils/prismaClient.js";
 
 export const offerRide = async (req, res) => {
 	try {
+	
+
 		const {
 			startLocation,
 			destination,
@@ -13,7 +15,12 @@ export const offerRide = async (req, res) => {
 			color,
 			plate,
 			preferences,
+			startLat,
+			startLng,
+			desLat,
+			desLng,
 		} = req.body;
+
 
 		const user = await prisma.user.findUnique({
 			where: { id: req.userId },
@@ -62,7 +69,11 @@ export const offerRide = async (req, res) => {
 			data: {
 				driverId: req.userId,
 				startLocation,
+				startLat,
+				startLng,
 				destination,
+				destLat:desLat,
+				destLng: desLng,
 				dateTime: new Date(dateTime),
 				seats: parseInt(seats),
 				price: parseFloat(price),
@@ -83,6 +94,7 @@ export const offerRide = async (req, res) => {
 				vehicle: true,
 			},
 		});
+
 
 		res.status(201).json({ message: "Ride offered successfully.", ride });
 	} catch (error) {

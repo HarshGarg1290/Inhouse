@@ -28,6 +28,10 @@ export default function OfferRide() {
 			allowPets: false,
 			quietRide: false,
 		},
+		startLat: "",
+		startLng: "",
+		desLat: "",
+		desLng: "",
 	};
 
 	const [formData, setFormData] = useState(initialFormState);
@@ -70,15 +74,49 @@ export default function OfferRide() {
 		}
 	};
 
+
+	const handleLocationSelect = (name, value, coordinates) => {
+		if (name === "startLocation") {
+			setFormData((prevData) => ({
+				...prevData,
+				startLocation: value,
+				startLat: coordinates.lat,
+				startLng : coordinates.lng,
+			}));
+		} else if (name === "destination") {
+			setFormData((prevData) => ({
+				...prevData,
+				destination: value,
+				desLat: coordinates.lat,
+				desLng: coordinates.lng,
+			}));
+		}
+
+		if (errors[name]) {
+			setErrors((prevErrors) => ({
+				...prevErrors,
+				[name]: "",
+			}));
+		}
+	};
+
 	const validateForm = () => {
 		const newErrors = {};
 
 		if (!formData.startLocation.trim()) {
 			newErrors.startLocation = "Starting location is required";
+		} else if (
+			!formData.startLat ||
+			!formData.startLng
+		) {
+			newErrors.startLocation =
+				"Valid coordinates for starting location are required";
 		}
 
 		if (!formData.destination.trim()) {
 			newErrors.destination = "Destination is required";
+		} else if (!formData.desLat || !formData.desLng) {
+			newErrors.destination = "Valid coordinates for destination are required";
 		}
 
 		if (!formData.dateTime) {
@@ -103,7 +141,6 @@ export default function OfferRide() {
 			newErrors.price = "Please enter a valid price";
 		}
 
-		// Only validate vehicle details if no vehicle is selected from dropdown
 		if (!selectedVehicle) {
 			if (!formData.model.trim()) {
 				newErrors.model = "Vehicle model is required";
@@ -130,13 +167,16 @@ export default function OfferRide() {
 					return;
 				}
 
-				const response = await fetch("http://localhost:5000/api/rides/vehicles", {
-					method: "GET",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${token}`,
-					},
-				});
+				const response = await fetch(
+					"http://localhost:5000/api/rides/vehicles",
+					{
+						method: "GET",
+						headers: {
+							"Content-Type": "application/json",
+							Authorization: `Bearer ${token}`,
+						},
+					}
+				);
 
 				const data = await response.json();
 				if (response.ok) {
@@ -177,7 +217,11 @@ export default function OfferRide() {
 
 			const rideData = {
 				...formData,
-				vehicleId: selectedVehicle || null, // Include vehicleId if a vehicle is selected
+				vehicleId: selectedVehicle || null,
+				startLat: parseFloat(formData.startLat),
+				startLng: parseFloat(formData.startLng),
+				desLat: parseFloat(formData.desLat),
+				desLng: parseFloat(formData.desLng),
 			};
 
 			const response = await fetch(
@@ -200,11 +244,11 @@ export default function OfferRide() {
 
 			setSuccess("Ride offered successfully!");
 
-			// Reset form state after successful submission
+
 			setFormData(initialFormState);
 			setSelectedVehicle("");
 
-			// Redirect after a short delay
+		
 			setTimeout(() => {
 				router.push("/myrides");
 			}, 1500);
@@ -217,7 +261,7 @@ export default function OfferRide() {
 		}
 	};
 
-	// Handle vehicle selection
+	
 	const handleVehicleSelect = (e) => {
 		const vehicleId = e.target.value;
 		setSelectedVehicle(vehicleId);
@@ -233,7 +277,7 @@ export default function OfferRide() {
 				}));
 			}
 		} else {
-			// Clear vehicle fields if no vehicle is selected
+	
 			setFormData((prevData) => ({
 				...prevData,
 				model: "",
@@ -277,29 +321,39 @@ export default function OfferRide() {
 							</h3>
 
 							<div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-								<OSMAutocomplete
-									label="From"
-									name="startLocation"
-									placeholder="Enter starting location"
-									value={formData.startLocation}
-									onChange={handleChange}
-									error={errors.startLocation}
-									options={{
-										countries: "IN",
-									}}
-								/>
+								<div>
+									<OSMAutocomplete
+										label="From"
+										name="startLocation"
+										placeholder="Enter starting location"
+										value={formData.startLocation}
+										onChange={(value, coordinates) =>
+											handleLocationSelect("startLocation", value, coordinates)
+										}
+										error={errors.startLocation}
+										options={{
+											countries: "IN",
+										}}
+									/>
+									
+								</div>
 
-								<OSMAutocomplete
-									label="To"
-									name="destination"
-									placeholder="Enter destination"
-									value={formData.destination}
-									onChange={handleChange}
-									error={errors.destination}
-									options={{
-										countries: "IN", // Restricts results to India
-									}}
-								/>
+								<div>
+									<OSMAutocomplete
+										label="To"
+										name="destination"
+										placeholder="Enter destination"
+										value={formData.destination}
+										onChange={(value, coordinates) =>
+											handleLocationSelect("destination", value, coordinates)
+										}
+										error={errors.destination}
+										options={{
+											countries: "IN",
+										}}
+									/>
+									
+								</div>
 							</div>
 
 							<div className="mt-4">

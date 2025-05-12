@@ -21,12 +21,12 @@ router.get("/my-rides", authenticateToken, getMyRides);
 router.get("/vehicles", authenticateToken, getMyVehicles);
 router.get("/find-rides", authenticateToken, findRides);
 
-// Booking management routes
+
 router.post("/book-ride/:rideId", authenticateToken, bookRide);
 router.put("/cancel-booking/:bookingId", authenticateToken, cancelBooking);
 router.get("/user-bookings", authenticateToken, getUserBookings);
 
-// Booking requests management (needed for driver view)
+
 router.get("/pending-bookings", authenticateToken, getPendingBookings);
 router.put("/bookings/:bookingId/approve", authenticateToken, approveBooking);
 router.put("/bookings/:bookingId/reject", authenticateToken, rejectBooking);

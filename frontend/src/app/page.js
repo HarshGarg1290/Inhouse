@@ -261,7 +261,7 @@ export default function Home() {
 													</p>
 													<div className="flex items-center">
 														<span className="text-xs text-gray-500">
-															3 people matched • $4.50 per person
+															3 people matched • ₹4.50 per person
 														</span>
 													</div>
 												</div>
@@ -321,7 +321,7 @@ export default function Home() {
 								Your Safety is Our Priority
 							</h2>
 							<p className="mt-4 max-w-2xl text-xl text-gray-500">
-								We've implemented robust security measures to ensure every ride
+								We&apos;ve implemented robust security measures to ensure every ride
 								is safe and reliable.
 							</p>
 
@@ -449,8 +449,8 @@ export default function Home() {
 											<div className="flex items-center">
 												<FaPiggyBank className="h-5 w-5 text-blue-600" />
 												<span className="ml-2 text-sm text-gray-700">
-													You've saved approximately{" "}
-													<span className="font-bold">$347</span> through ride
+													You&apos;ve saved approximately{" "}
+													<span className="font-bold">₹347</span> through ride
 													sharing!
 												</span>
 											</div>

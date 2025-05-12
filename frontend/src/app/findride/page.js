@@ -158,7 +158,7 @@ export default function FindRide() {
 				return;
 			}
 			const response = await fetch(
-				`http://localhost:5000/api/rides/find-rides?${searchParams.toString()}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/api/rides/find-rides?${searchParams.toString()}`,
 				{
 					method: "GET",
 					headers: {
@@ -232,7 +232,7 @@ export default function FindRide() {
 			}
 
 			const response = await fetch(
-				`http://localhost:5000/api/rides/book-ride/${bookingRideId}`,
+				`${process.env.NEXT_PUBLIC_API_URL}/api/rides/book-ride/${bookingRideId}`,
 				{
 					method: "POST",
 					headers: {
@@ -265,6 +265,7 @@ export default function FindRide() {
 
 	return (
 		<div className="min-h-screen bg-gray-50">
+			
 			<Navbar />
 			<div className="max-w-6xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
 				<main>

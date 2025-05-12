@@ -48,9 +48,11 @@ export default function Navbar() {
 						</button>
 						<div className="ml-3 relative">
 							<button className="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+								<Link href="/profile" className="flex items-center">
 								<div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center">
 									<User className="h-5 w-5 text-gray-500" />
-								</div>
+									</div>
+									</Link>
 							</button>
 						</div>
 					</div>

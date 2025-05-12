@@ -168,7 +168,7 @@ export default function OfferRide() {
 				}
 
 				const response = await fetch(
-					"http://localhost:5000/api/rides/vehicles",
+					`${process.env.NEXT_PUBLIC_API_URL}/api/rides/vehicles`,
 					{
 						method: "GET",
 						headers: {
@@ -225,7 +225,7 @@ export default function OfferRide() {
 			};
 
 			const response = await fetch(
-				"http://localhost:5000/api/rides/offer-ride",
+				`${process.env.NEXT_PUBLIC_API_URL}/api/rides/offer-ride`,
 				{
 					method: "POST",
 					headers: {

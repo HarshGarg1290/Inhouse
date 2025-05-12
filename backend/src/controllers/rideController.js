@@ -1,4 +1,4 @@
-import prisma from "../utils/prismaClient.js";
+import prisma from "../utils/prisma.js";
 
 export const offerRide = async (req, res) => {
 	try {

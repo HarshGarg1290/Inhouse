@@ -65,7 +65,7 @@ export default function AvailableRides({
 						No rides found
 					</h3>
 					<p className="text-gray-600 mb-6">
-						We couldn't find any rides matching your search criteria within{" "}
+						We couldn&apos;t find any rides matching your search criteria within{" "}
 						{searchRadius}km radius.
 					</p>
 					<p className="text-gray-600">

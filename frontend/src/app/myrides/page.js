@@ -30,6 +30,7 @@ export default function MyRides() {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 
@@ -61,6 +62,7 @@ export default function MyRides() {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 
@@ -91,6 +93,7 @@ export default function MyRides() {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 
@@ -136,6 +139,7 @@ export default function MyRides() {
 						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json",
 					},
+					credentials: "include",
 				}
 			);
 
@@ -180,6 +184,7 @@ export default function MyRides() {
 						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json",
 					},
+					credentials: "include",
 				}
 			);
 
@@ -212,6 +217,7 @@ export default function MyRides() {
 						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json",
 					},
+					credentials: "include",
 				}
 			);
 

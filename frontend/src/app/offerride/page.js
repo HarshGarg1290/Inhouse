@@ -175,6 +175,7 @@ export default function OfferRide() {
 							"Content-Type": "application/json",
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 
@@ -233,6 +234,7 @@ export default function OfferRide() {
 						Authorization: `Bearer ${token}`,
 					},
 					body: JSON.stringify(rideData),
+					credentials: "include",
 				}
 			);
 

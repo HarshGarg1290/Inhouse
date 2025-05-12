@@ -216,10 +216,14 @@ export default function Register() {
 				}
 			});
 
-			const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`, {
-				method: "POST",
-				body: formDataToSend,
-			});
+			const response = await fetch(
+				`${process.env.NEXT_PUBLIC_API_URL}/api/auth/register`,
+				{
+					method: "POST",
+					body: formDataToSend,
+					credentials: "include",
+				}
+			);
 
 			const data = await response.json();
 

@@ -18,7 +18,7 @@ export default function Login() {
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
-		setError(""); // Clear previous errors
+		setError(""); 
 
 		try {
 			const res = await fetch(
@@ -27,6 +27,7 @@ export default function Login() {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({ email, password }),
+					credentials: "include",
 				}
 			);
 

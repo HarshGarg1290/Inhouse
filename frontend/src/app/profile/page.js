@@ -28,6 +28,7 @@ export default function ProfilePage() {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 				if (!userRes.ok) throw new Error("Failed to fetch user details");
@@ -40,6 +41,7 @@ export default function ProfilePage() {
 						headers: {
 							Authorization: `Bearer ${token}`,
 						},
+						credentials: "include",
 					}
 				);
 
@@ -85,6 +87,7 @@ export default function ProfilePage() {
 						Authorization: `Bearer ${localStorage.getItem("token")}`,
 					},
 					body: JSON.stringify(formData),
+					credentials: "include",
 				}
 			);
 

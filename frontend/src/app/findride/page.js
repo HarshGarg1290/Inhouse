@@ -158,13 +158,16 @@ export default function FindRide() {
 				return;
 			}
 			const response = await fetch(
-				`${process.env.NEXT_PUBLIC_API_URL}/api/rides/find-rides?${searchParams.toString()}`,
+				`${
+					process.env.NEXT_PUBLIC_API_URL
+				}/api/rides/find-rides?${searchParams.toString()}`,
 				{
 					method: "GET",
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${token}`,
 					},
+					credentials: "include",
 				}
 			);
 
@@ -240,6 +243,7 @@ export default function FindRide() {
 						Authorization: `Bearer ${token}`,
 					},
 					body: JSON.stringify({ seats: selectedSeats }),
+					credentials: "include",
 				}
 			);
 

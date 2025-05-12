@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import authRoutes from "./src/routes/authRoutes.js";
 import rideRoutes from "./src/routes/rideRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
-import prisma from "./src/utils/prismaClient.js";
+import prisma from "./src/utils/prisma.js";
 
 dotenv.config();
 const app = express();

@@ -20,7 +20,23 @@ const testDBConnection = async () => {
 };
 testDBConnection();
 
-app.use(cors());
+const allowedOrigins = [
+	"https://ride-share-two-zeta.vercel.app",
+	"http://localhost:3000",
+];
+
+app.use(
+	cors({
+		origin: (origin, callback) => {
+			if (!origin || allowedOrigins.includes(origin)) {
+				return callback(null, true);
+			}
+			return callback(new Error("Not allowed by CORS"));
+		},
+		credentials: true,
+	})
+);
+
 app.use(bodyParser.json());
 
 app.use("/api/auth", authRoutes);

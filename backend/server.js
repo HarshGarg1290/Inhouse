@@ -36,6 +36,11 @@ app.use(
 		credentials: true,
 	})
 );
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Credentials", "true");
+	next();
+});
+app.options("*", cors()); 
 
 app.use(bodyParser.json());
 

@@ -25,10 +25,8 @@ const allowedOrigins = [
 	"http://localhost:3000",
 ];
 
-// CORS Configuration
 app.use(cors({
 	origin: function(origin, callback) {
-		// Allow requests with no origin (like mobile apps or curl requests)
 		if (!origin) return callback(null, true);
 		if (allowedOrigins.indexOf(origin) === -1) {
 			return callback(new Error('The CORS policy for this site does not allow access from the specified Origin.'), false);
@@ -38,10 +36,9 @@ app.use(cors({
 	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 	allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
 	credentials: true,
-	maxAge: 86400 // 24 hours
+	maxAge: 86400 
 }));
 
-// Pre-flight requests
 app.options('*', (req, res) => {
 	const origin = req.headers.origin;
 	if (allowedOrigins.includes(origin)) {
@@ -52,16 +49,6 @@ app.options('*', (req, res) => {
 		res.setHeader('Access-Control-Max-Age', '86400');
 	}
 	res.status(200).end();
-});
-
-// Add headers to all responses
-app.use((req, res, next) => {
-	const origin = req.headers.origin;
-	if (allowedOrigins.includes(origin)) {
-		res.setHeader('Access-Control-Allow-Origin', origin);
-		res.setHeader('Access-Control-Allow-Credentials', 'true');
-	}
-	next();
 });
 
 app.use(bodyParser.json());

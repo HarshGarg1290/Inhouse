@@ -1,6 +1,6 @@
 # Smart Ride Sharing Platform
 
-![Smart Ride Sharing](https://via.placeholder.com/800x400?text=Smart+Ride+Sharing)
+
 
 A modern, full-stack ride-sharing application that connects drivers with passengers for efficient carpooling and ride-sharing experiences.
 

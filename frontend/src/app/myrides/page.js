@@ -116,7 +116,7 @@ export default function MyRides() {
 		fetchMyBookings();
 	}, [router]);
 
-	// Helper function to format date
+
 	const formatDate = (dateString) => {
 		const date = new Date(dateString);
 		return format(date, "PPP p");
@@ -156,7 +156,6 @@ export default function MyRides() {
 
 			alert("Booking approved successfully!");
 
-			// Refresh rides to update available seats
 			const ridesResponse = await fetch(
 				`${process.env.NEXT_PUBLIC_API_URL}/api/rides/my-rides`,
 				{
@@ -243,7 +242,6 @@ export default function MyRides() {
 		}
 	};
 
-	// Helper function to get status badge color
 	const getStatusBadgeColor = (status) => {
 		switch (status) {
 			case "PENDING":
@@ -259,7 +257,6 @@ export default function MyRides() {
 		}
 	};
 
-	// Helper function to get status icon
 	const getStatusIcon = (status) => {
 		switch (status) {
 			case "PENDING":
@@ -909,7 +906,7 @@ export default function MyRides() {
 
 										<div className="p-6">
 											<div className="flex flex-col lg:flex-row lg:space-x-6">
-												{/* Left section - driver details and vehicle */}
+											
 												<div className="flex-1 mb-6 lg:mb-0">
 													<div className="bg-gray-50 rounded-lg p-4 mb-4">
 														<div className="flex items-center mb-3">
